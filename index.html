@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundFlow - Музыкальный стриминг сервис</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        soundflow: {
+                            violet: '#630156',
+                            white: 'white',
+                            black: `#101010`,
+                            darkgray: '#121212',
+                            gray: '#282828',
+                            lightgray: '#b3b3b3',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #282828 #121212 ;
+        }
+        
+        *::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        *::-webkit-scrollbar-track {
+            background: #121212;
+        }
+        
+        *::-webkit-scrollbar-thumb {
+            background-color: #282828;
+            border-radius: 20px;
+            border: 3px solid #121212;
+        }
+        
+        .gradient-overlay {
+            background: linear-gradient(180deg, transparent 0%, rgba(18, 18, 18, 0.6) 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            background-color: #282828;
+        }
+        
+        .glow {
+            box-shadow: 0 0 30px rgba(17, 0, 103, 0.3);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+        
+        .slide-in-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .slide-in-delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .slide-in-delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .slide-in-delay-4 { animation-delay: 0.4s; opacity: 0; }
+    </style>
+</head>
+<body class="bg-soundflow-darkgray text-white font-sans">
+    
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-soundflow-black backdrop-blur-md border-b border-soundflow-gray">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 bg-gradient-to-br from-soundflow-violet to-sky-400 rounded-full flex items-center justify-center glow group-hover:scale-110 transition-transform">
+                        <i class="fas fa-music text-soundflow-black text-lg"></i>
+                    </div>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-soundflow-violet to-sky-400 bg-clip-text text-transparent">SoundFlow</span>
+                </a>
+                
+                <!-- Navigation -->
+                <ul class="hidden md:flex items-center space-x-8">
+                    <li><a href="index.html" class="text-white font-semibold border-b-2 border-soundflow-violet pb-1 hover:text-soundflow-violet transition">Главная</a></li>
+                    <li><a href="faq.html" class="text-soundflow-lightgray hover:text-white transition">FAQ</a></li>
+                    <li><a href="contacts.html" class="text-soundflow-lightgray hover:text-white transition">Контакты</a></li>
+                </ul>
+                
+                <!-- CTA Button -->
+                <div class="flex items-center space-x-4">
+                    <button class="hidden md:block px-6 py-2.5 bg-soundflow-violet hover:bg-sky-500 text-soundflow-white font-semibold rounded-full transition transform hover:scale-105 glow">
+                        Начать слушать
+                    </button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-soundflow-gray pt-4">
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="block text-white font-semibold">Главная</a></li>
+                    <li><a href="faq.html" class="block text-soundflow-lightgray hover:text-white">FAQ</a></li>
+                    <li><a href="contacts.html" class="block text-soundflow-lightgray hover:text-white">Контакты</a></li>
+                    <li><button class="w-full px-6 py-2.5 bg-soundflow-violet hover:bg-sky-500 text-soundflow-white font-semibold rounded-full transition">Начать слушать</button></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-soundflow-violet/10 to-transparent"></div>
+        <div class="absolute top-20 right-10 w-72 h-72 bg-soundflow-violet/20 rounded-full blur-3xl floating"></div>
+        <div class="absolute bottom-10 left-10 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl" style="animation: float 8s ease-in-out infinite;"></div>
+        
+        <div class="container mx-auto relative z-10">
+            <div class="max-w-5xl mx-auto text-center">
+                <div class="slide-in">
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                        Открой музыку <span class="bg-gradient-to-r from-soundflow-violet to-sky-400 bg-clip-text text-transparent">по-новому</span>
+                    </h1>
+                </div>
+                
+                <div class="slide-in slide-in-delay-1">
+                    <p class="text-xl md:text-2xl text-soundflow-lightgray mb-8 max-w-3xl mx-auto">
+                        Слушайте любимые треки, изучайте их смысл через аннотации Genius, смотрите клипы и оценивайте музыку. Всё в одном месте.
+                    </p>
+                </div>
+                
+                <div class="slide-in slide-in-delay-2 flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                    <button class="px-8 py-4 bg-soundflow-violet hover:bg-sky-500 text-soundflow-white font-bold text-lg rounded-full transition transform hover:scale-105 glow flex items-center gap-2">
+                        <i class="fas fa-play"></i>
+                        Начать бесплатно
+                    </button>
+                    <button class="px-8 py-4 bg-transparent border-2 border-white hover:bg-white/10 text-white font-semibold text-lg rounded-full transition">
+                        Узнать больше
+                    </button>
+                </div>
+                
+                <!-- Feature Pills -->
+                <div class="slide-in slide-in-delay-3 flex flex-wrap gap-3 justify-center">
+                    <span class="px-4 py-2 bg-soundflow-gray rounded-full text-sm font-mono">
+                        <i class="fas fa-check-circle text-soundflow-violet mr-2"></i>Интерактивные тексты
+                    </span>
+                    <span class="px-4 py-2 bg-soundflow-gray rounded-full text-sm font-mono">
+                        <i class="fas fa-check-circle text-soundflow-violet mr-2"></i>YouTube клипы
+                    </span>
+                    <span class="px-4 py-2 bg-soundflow-gray rounded-full text-sm font-mono">
+                        <i class="fas fa-check-circle text-soundflow-violet mr-2"></i>Рейтинги альбомов
+                    </span>
+                    <span class="px-4 py-2 bg-soundflow-gray rounded-full text-sm font-mono">
+                        <i class="fas fa-check-circle text-soundflow-violet mr-2"></i>Без рекламы
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="py-20 px-6 bg-soundflow-black">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Уникальные возможности</h2>
+                <p class="text-xl text-soundflow-lightgray">Больше чем просто музыкальный плеер</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+                <!-- Feature Card 1 -->
+                <div class="bg-soundflow-gray rounded-2xl p-8 card-hover cursor-pointer">
+                    <div class="w-14 h-14 bg-gradient-to-br from-soundflow-violet to-sky-400 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-book-open text-2xl text-soundflow-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3"><span class="bg-gradient-to-r from-soundflow-violet to-sky-400 bg-clip-text text-transparent">Genius</span> аннотации</h3>
+                    <p class="text-soundflow-lightgray leading-relaxed">
+                        Узнайте истинный смысл песен. Читайте аннотации от создателей и фанатов прямо во время прослушивания.
+                    </p>
+                </div>
+                
+                <!-- Feature Card 2 -->
+                <div class="bg-soundflow-gray rounded-2xl p-8 card-hover cursor-pointer">
+                    <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-pink-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fab fa-youtube text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Бесшовные <span class="bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent">YouTube</span> клипы</h3>
+                    <p class="text-soundflow-lightgray leading-relaxed">
+                        Переключайтесь между аудио и видео одним кликом. Клип начнётся с того же момента, на котором вы остановились.
+                    </p>
+                </div>
+                
+                <!-- Feature Card 3 -->
+                <div class="bg-soundflow-gray rounded-2xl p-8 card-hover cursor-pointer">
+                    <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-star text-2xl text-soundflow-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3"><span class="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Оценивай</span> любимую музыку</h3>
+                    <p class="text-soundflow-lightgray leading-relaxed">
+                        Оценивайте треки и альбомы, делитесь своим мнением, находите лучшую музыку по рейтингам сообщества.
+                    </p>
+                </div>
+                
+                <!-- Feature Card 4 -->
+                <div class="bg-soundflow-gray rounded-2xl p-8 card-hover cursor-pointer">
+                    <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-headphones text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3"><span class="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">HD</span> качество</h3>
+                    <p class="text-soundflow-lightgray leading-relaxed">
+                        Наслаждайтесь музыкой в высочайшем качестве. Поддержка lossless форматов для истинных меломанов.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works Section -->
+    <section class="py-20 px-6">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Как это работает</h2>
+                <p class="text-xl text-soundflow-lightgray">Три простых шага к лучшему музыкальному опыту на Российском рынке</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-soundflow-violet rounded-full flex items-center justify-center text-3xl font-bold text-soundflow-white mx-auto mb-6">
+                        1
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Зарегистрируйтесь</h3>
+                    <p class="text-soundflow-lightgray">
+                        Создайте аккаунт бесплатно и получите доступ ко всем функциям платформы
+                    </p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-soundflow-violet rounded-full flex items-center justify-center text-3xl font-bold text-soundflow-white mx-auto mb-6">
+                        2
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Исследуйте музыку</h3>
+                    <p class="text-soundflow-lightgray">
+                        Слушайте треки, читайте аннотации, смотрите клипы и оценивайте любимые альбомы
+                    </p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-soundflow-violet rounded-full flex items-center justify-center text-3xl font-bold text-soundflow-white mx-auto mb-6">
+                        3
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Делитесь эмоциями</h3>
+                    <p class="text-soundflow-lightgray">
+                        Создавайте плейлисты, общайтесь с другими меломанами и находите новую музыку
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Section -->
+    <section class="py-20 px-6 bg-soundflow-black">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Выберите свой план</h2>
+                <p class="text-xl text-soundflow-lightgray">Начните бесплатно, обновитесь когда будете готовы</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Free Plan -->
+                <div class="bg-soundflow-gray rounded-2xl p-8 card-hover">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold mb-2">Free</h3>
+                        <div class="text-4xl font-bold">
+                            ₽0<span class="text-lg text-soundflow-lightgray font-normal">/мес</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-soundflow-violet mt-1"></i>
+                            <span class="text-soundflow-lightgray">Базовое качество звука</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-soundflow-violet mt-1"></i>
+                            <span class="text-soundflow-lightgray">Genius аннотации</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-soundflow-violet mt-1"></i>
+                            <span class="text-soundflow-lightgray">Рейтинги и оценки</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-times text-gray-600 mt-1"></i>
+                            <span class="text-gray-600">Реклама присутствует</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-transparent border-2 border-soundflow-lightgray hover:border-white text-white font-semibold rounded-full transition">
+                        Попробовать
+                    </button>
+                </div>
+                
+                <!-- Premium Plan -->
+                <div class="bg-gradient-to-br from-soundflow-violet to-sky-500 rounded-2xl p-8 transform scale-105 relative">
+                    <div class="absolute top-4 right-4 bg-soundflow-black text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        Популярный
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold mb-2 text-soundflow-white">Premium</h3>
+                        <div class="text-4xl font-bold text-soundflow-white">
+                            ₽299<span class="text-lg font-normal">/мес</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 mb-8 text-soundflow-white">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check mt-1"></i>
+                            <span>HD качество звука</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check mt-1"></i>
+                            <span>YouTube клипы</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check mt-1"></i>
+                            <span>Без рекламы</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check mt-1"></i>
+                            <span>Офлайн режим</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 border-2 border-soundflow-lightgray bg-soundflow-black hover:border-soundflow-white hover:bg-sky-500 text-white font-bold rounded-full transition">
+                        Начать Premium
+                    </button>
+                </div>
+                
+                <!-- Family Plan -->
+                <div class="bg-soundflow-gray rounded-2xl p-8 card-hover">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold mb-2">Family</h3>
+                        <div class="text-4xl font-bold">
+                            ₽499<span class="text-lg text-soundflow-lightgray font-normal">/мес</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-soundflow-violet mt-1"></i>
+                            <span class="text-soundflow-lightgray">До 6 аккаунтов</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-soundflow-violet mt-1"></i>
+                            <span class="text-soundflow-lightgray">Все возможности Premium</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-soundflow-violet mt-1"></i>
+                            <span class="text-soundflow-lightgray">Семейный микс</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-soundflow-violet mt-1"></i>
+                            <span class="text-soundflow-lightgray">Родительский контроль</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-transparent border-2 border-soundflow-lightgray hover:border-white text-white font-semibold rounded-full transition">
+                        Для всей семьи
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-20 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-soundflow-violet/20 to-sky-500/20"></div>
+        <div class="container mx-auto max-w-4xl text-center relative z-10">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Готовы открыть музыку заново?</h2>
+            <p class="text-xl text-soundflow-lightgray mb-8">
+                Присоединяйтесь к сообществу любителей музыки и обсуждайте новейшие релизы, наслаждайтесь высочайшим качеством звука, смотрите клипы любимых артистов и заново открывайте для себя треки с Genius аннотациями.
+            </p>
+            <button class="px-10 py-4 bg-soundflow-violet hover:bg-sky-500 text-soundflow-white font-bold text-lg rounded-full transition transform hover:scale-105 glow">
+                Начать бесплатно
+            </button>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-soundflow-black py-12 border-soundflow-gray">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-flow-col grid-rows-3 gap-2 md:grid-cols-3 gap-12 mb-8 ">
+                
+                <!-- Support -->
+                <div class="row-start-1 row-end-4">
+                    <h4 class="font-bold text-lg mb-4">Поддержка</h4>
+                    <ul class="space-y-2">
+                        <li><a href="faq.html" class="text-soundflow-lightgray hover:text-white transition">FAQ</a></li>
+                        <li><a href="contacts.html" class="text-soundflow-lightgray hover:text-white transition">Контакты</a></li>
+                        <li><a href="#" class="text-soundflow-lightgray hover:text-white transition">Помощь</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legal -->
+                <div class="row-start-1 row-end-4">
+                    <h4 class="font-bold text-lg mb-4">Документы</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-soundflow-lightgray hover:text-white transition">Условия использования</a></li>
+                        <li><a href="#" class="text-soundflow-lightgray hover:text-white transition">Политика конфиденциальности</a></li>
+                        <li><a href="#" class="text-soundflow-lightgray hover:text-white transition">Лицензии</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Social -->
+                <div class="row-start-1 row-end-4">
+                    <h4 class="font-bold text-lg mb-4">Социальные сети</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-soundflow-gray hover:bg-soundflow-violet rounded-full flex items-center justify-center transition">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-soundflow-gray hover:bg-soundflow-violet rounded-full flex items-center justify-center transition">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-soundflow-gray hover:bg-soundflow-violet rounded-full flex items-center justify-center transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-soundflow-gray pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <div class="w-8 h-8 bg-gradient-to-br from-soundflow-violet to-sky-400 rounded-full flex items-center justify-center">
+                        <i class="fas fa-music text-soundflow-black text-sm"></i>
+                    </div>
+                    <span class="font-bold">SoundFlow</span>
+                </div>
+                <p class="text-soundflow-lightgray text-sm">
+                    © 2026 SoundFlow. Все права защищены.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
