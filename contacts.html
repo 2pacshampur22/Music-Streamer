@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - SoundFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        soundflow: {
+                            violet: '#630156',
+                            white: 'white',
+                            black: `#101010`,
+                            darkgray: '#121212',
+                            gray: '#282828',
+                            lightgray: '#b3b3b3',
+                        }
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #282828 #121212;
+        }
+        
+        *::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        *::-webkit-scrollbar-track {
+            background: #121212;
+        }
+        
+        *::-webkit-scrollbar-thumb {
+            background-color: #282828;
+            border-radius: 20px;
+            border: 3px solid #121212;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body class="bg-soundflow-darkgray text-white font-sans">
+    
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-soundflow-black backdrop-blur-md border-b border-soundflow-gray">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 bg-gradient-to-br from-soundflow-violet to-sky-400 rounded-full flex items-center justify-center  group-hover:scale-110 transition-transform">
+                        <i class="fas fa-music text-soundflow-black text-lg"></i>
+                    </div>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-soundflow-violet to-sky-400 bg-clip-text text-transparent">SoundFlow</span>
+                </a>
+                
+                <!-- Navigation -->
+                <ul class="hidden md:flex items-center space-x-8">
+                    <li><a href="index.html" class="text-soundflow-lightgray hover:text-white transition">Главная</a></li>
+                    <li><a href="faq.html" class="text-soundflow-lightgray hover:text-white transition">FAQ</a></li>
+                    <li><a href="contacts.html" class="text-white font-semibold border-b-2 border-soundflow-violet pb-1 hover:text-soundflow-violet transition">Контакты</a></li>
+                </ul>
+                
+                <!-- CTA Button -->
+                <div class="flex items-center space-x-4">
+                    <button class="hidden md:block px-6 py-2.5 bg-soundflow-violet hover:bg-sky-500 text-soundflow-white font-semibold rounded-full transition transform hover:scale-105 ">
+                        Начать слушать
+                    </button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-soundflow-gray pt-4">
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="block text-soundflow-lightgray hover:text-white">Главная</a></li>
+                    <li><a href="faq.html" class="block text-soundflow-lightgray hover:text-white">FAQ</a></li>
+                    <li><a href="contacts.html" class="block text-white font-semibold">Контакты</a></li>
+                    <li><button class="w-full px-6 py-2.5 bg-soundflow-violet hover:bg-sky-500 text-soundflow-black font-semibold rounded-full transition">Начать слушать</button></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Contacts Hero -->
+    <section class="pt-32 pb-12 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-soundflow-violet/10 to-transparent"></div>
+        <div class="container mx-auto max-w-4xl text-center relative z-10">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                Свяжитесь <span class="bg-gradient-to-r from-soundflow-violet to-sky-400 bg-clip-text text-transparent">с нами</span>
+            </h1>
+            <p class="text-xl text-soundflow-lightgray">
+                Мы всегда рады услышать вас. Отправьте нам сообщение и мы ответим в ближайшее время
+            </p>
+        </div>
+    </section>
+    
+    <!-- Contact Form & Info -->
+    <section class="py-12 px-6 pb-20">
+        <div class="container mx-auto max-w-6xl">
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                
+                <!-- Contact Form -->
+                <div class="bg-soundflow-gray rounded-2xl p-8">
+                    <h2 class="text-3xl font-bold mb-6">Оставьте отзыв</h2>
+                    
+                    <form id="contactForm" class="space-y-6">
+                        
+                        <!-- Name -->
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">
+                                Ваше имя <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="name"
+                                   placeholder="Иван Иванов" 
+                                   required
+                                   class="w-full px-4 py-3 bg-soundflow-black rounded-lg text-white placeholder-soundflow-lightgray focus:ring-2 focus:ring-soundflow-violet transition">
+                        </div>
+                        
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">
+                                Email <span class="text-red-500">*</span>
+                            </label>
+                            <input type="email" 
+                                   name="email"
+                                   placeholder="example@email.com" 
+                                   required
+                                   class="w-full px-4 py-3 bg-soundflow-black rounded-lg text-white placeholder-soundflow-lightgray focus:ring-2 focus:ring-soundflow-violet transition">
+                        </div>
+                        
+                        <!-- Subject -->
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">
+                                Тема обращения <span class="text-red-500">*</span>
+                            </label>
+                            <select name="subject" 
+                                    required
+                                    class="w-full px-4 py-3 bg-soundflow-black rounded-lg text-white focus:ring-2 focus:ring-soundflow-violet transition">
+                                <option value="" disabled selected>Выберите тему</option>
+                                <option value="feedback">Предложение</option>
+                                <option value="complaint">Жалоба</option>
+                                <option value="question">Вопрос</option>
+                                <option value="thanks">Благодарность</option>
+                                <option value="partnership">Партнерство</option>
+                                <option value="technical">Техническая проблема</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Message -->
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">
+                                Сообщение <span class="text-red-500">*</span>
+                            </label>
+                            <textarea name="message"
+                                      placeholder="Расскажите нам подробнее..."
+                                      rows="5"
+                                      required
+                                      class="w-full px-4 py-3 bg-soundflow-black rounded-lg text-white placeholder-soundflow-lightgray focus:ring-2 focus:ring-soundflow-violet transition resize-none"></textarea>
+                        </div>
+                        
+                        <!-- Consent -->
+                        <div>
+                            <label class="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" 
+                                       name="consent"
+                                       required
+                                       class="mt-1 w-5 h-5 accent-soundflow-violet">
+                                <span class="text-sm text-soundflow-lightgray">
+                                    Я соглашаюсь на обработку персональных данных в соответствии с 
+                                    <a href="#" class="text-soundflow-violet hover:underline">политикой конфиденциальности</a>
+                                </span>
+                            </label>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <button type="submit" 
+                                class="w-full py-4 bg-soundflow-violet hover:bg-sky-500 text-soundflow-white font-bold text-lg rounded-full transition transform hover:scale-105 ">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Отправить сообщение
+                        </button>
+                        
+                    </form>
+                    
+                    <!-- Success Message -->
+                    <div id="successMessage" class="hidden mt-6 p-4 bg-soundflow-violet border border-soundflow-violet rounded-lg">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-soundflow-violet text-xl mt-0.5"></i>
+                            <div>
+                                <h4 class="font-semibold text-soundflow-violet mb-1">Сообщение отправлено!</h4>
+                                <p class="text-sm text-soundflow-lightgray">Мы получили ваше сообщение и свяжемся с вами в ближайшее время.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Contact Information -->
+                <div class="space-y-8">
+                    
+                    <!-- Contact Cards -->
+                    <div class="bg-soundflow-gray rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6">Контактная информация</h3>
+                        
+                        <div class="space-y-6">
+                            
+                            <!-- Address -->
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-soundflow-violet rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-soundflow-white text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Адрес офиса</h4>
+                                    <p class="text-soundflow-lightgray">Москва, ул. Примерная, 123</p>
+                                    <p class="text-soundflow-lightgray">БЦ "Музыкальный", офис 405</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Phone -->
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-soundflow-violet rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-phone text-soundflow-white text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Телефон</h4>
+                                    <a href="tel:+79991234567" class="text-soundflow-lightgray hover:text-soundflow-violet transition">+7 (999) 123-45-67</a>
+                                    <p class="text-sm text-soundflow-lightgray mt-1">Пн-Пт: 9:00 - 18:00 (МСК)</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Email -->
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-soundflow-violet rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-envelope text-soundflow-white text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Email</h4>
+                                    <a href="mailto:info@soundflow.com" class="text-soundflow-lightgray hover:text-soundflow-violet transition">info@soundflow.com</a>
+                                    <p class="text-sm text-soundflow-lightgray mt-1">Ответим в течение 24 часов</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Social Media -->
+                    <div class="bg-soundflow-gray rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6">Социальные сети</h3>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            
+                            <a href="#" class="flex items-center gap-3 p-4 bg-soundflow-black rounded-lg hover:bg-soundflow-black transition group">
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                    <i class="fab fa-telegram text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-soundflow-lightgray">Telegram</p>
+                                    <p class="font-semibold text-sm group-hover:text-soundflow-violet transition">@soundflow</p>
+                                </div>
+                            </a>
+                            
+                            <a href="#" class="flex items-center gap-3 p-4 bg-soundflow-black rounded-lg hover:bg-soundflow-black transition group">
+                                <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center">
+                                    <i class="fab fa-tiktok text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-soundflow-lightgray">TikTok</p>
+                                    <p class="font-semibold text-sm group-hover:text-soundflow-violet transition">SoundFlow</p>
+                                </div>
+                            </a>
+                            
+                            <a href="#" class="flex items-center gap-3 p-4 bg-soundflow-black rounded-lg hover:bg-soundflow-black transition group">
+                                <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center">
+                                    <i class="fab fa-youtube text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-soundflow-lightgray">YouTube</p>
+                                    <p class="font-semibold text-sm group-hover:text-soundflow-violet transition">SoundFlow</p>
+                                </div>
+                            </a>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Working Hours -->
+                    <div class="bg-soundflow-gray rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6">График работы</h3>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-soundflow-lightgray">Понедельник - Пятница</span>
+                                <span class="font-semibold">9:00 - 18:00</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-soundflow-lightgray">Суббота - Воскресенье</span>
+                                <span class="font-semibold text-red-400">Выходной</span>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-soundflow-black">
+                                <p class="text-sm text-soundflow-lightgray">
+                                    <i class="fas fa-info-circle text-soundflow-violet mr-2"></i>
+                                    Все время указано по МСК
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-soundflow-black py-12 border-soundflow-gray">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 mb-8 ">  
+                <!-- Support -->
+                <div class="row-start-1 row-end-4">
+                    <h4 class="font-bold text-lg mb-4">Поддержка</h4>
+                    <ul class="space-y-2">
+                        <li><a href="faq.html" class="text-soundflow-lightgray hover:text-white transition">FAQ</a></li>
+                        <li><a href="contacts.html" class="text-soundflow-lightgray hover:text-white transition">Контакты</a></li>
+                        <li><a href="#" class="text-soundflow-lightgray hover:text-white transition">Помощь</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legal -->
+                <div class="row-start-1 row-end-4">
+                    <h4 class="font-bold text-lg mb-4">Документы</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-soundflow-lightgray hover:text-white transition">Условия использования</a></li>
+                        <li><a href="#" class="text-soundflow-lightgray hover:text-white transition">Политика конфиденциальности</a></li>
+                        <li><a href="#" class="text-soundflow-lightgray hover:text-white transition">Лицензии</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Social -->
+                <div class="row-start-1 row-end-4">
+                    <h4 class="font-bold text-lg mb-4">Социальные сети</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-soundflow-gray hover:bg-soundflow-violet rounded-full flex items-center justify-center transition">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-soundflow-gray hover:bg-soundflow-violet rounded-full flex items-center justify-center transition">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-soundflow-gray hover:bg-soundflow-violet rounded-full flex items-center justify-center transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-soundflow-gray pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <div class="w-8 h-8 bg-gradient-to-br from-soundflow-violet to-sky-400 rounded-full flex items-center justify-center">
+                        <i class="fas fa-music text-soundflow-black text-sm"></i>
+                    </div>
+                    <span class="font-bold">SoundFlow</span>
+                </div>
+                <p class="text-soundflow-lightgray text-sm">
+                    © 2026 SoundFlow. Все права защищены.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(contactForm);
+            const data = Object.fromEntries(formData);
+            
+            console.log('Form submitted:', data);
+            
+            // Show success message
+            successMessage.classList.remove('hidden');
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.add('hidden');
+            }, 5000);
+            
+            // Scroll to success message
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    </script>
+</body>
+</html>
