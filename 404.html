@@ -16,7 +16,7 @@
                         soundflow: {
                             violet: '#630156',
                             white: 'white',
-                            black: `#101010`,
+                            black: '#101010',
                             darkgray: '#121212',
                             gray: '#282828',
                             lightgray: '#b3b3b3',
@@ -27,68 +27,68 @@
         }
     </script>
 </head>
-<body class="bg-soundflow-darkgray text-white font-sans min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
+<body class="bg-soundflow-darkgray text-white font-sans min-h-screen py-8 px-4 sm:px-6 relative overflow-x-hidden">
     <!-- Main Content -->
     <div class="relative z-10 max-w-4xl mx-auto text-center">
         
         <!-- 404 Text -->
-        <h1 class="md:text-[200px] font-bold mb-6 leading-none bg-gradient-to-r from-soundflow-violet to-sky-400 bg-clip-text text-transparent">
+        <h1 class="text-7xl sm:text-8xl md:text-9xl lg:text-[200px] font-bold mb-4 sm:mb-6 leading-none bg-gradient-to-r from-soundflow-violet to-sky-400 bg-clip-text text-transparent">
             404
         </h1>
         
         <!-- Heading -->
-        <h2 class="text-3xl md:text-5xl font-bold mb-4">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
             Ой! Страница не найдена
         </h2>
         
         <!-- Description -->
-        <p class="text-lg md:text-xl text-soundflow-lightgray mb-8 max-w-2xl mx-auto">
+        <p class="text-base sm:text-lg md:text-xl text-soundflow-lightgray mb-6 sm:mb-8 max-w-2xl mx-auto">
             Похоже, эта страница пропала. Возможно, она была удалена или перемещена. 
             Но не волнуйтесь — мы поможем вам найти путь обратно к музыке!
         </p>
         
         <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center mb-8 sm:mb-12">
             <a href="index.html" 
-               class="inline-flex items-center gap-2 px-8 py-4 bg-soundflow-violet hover:bg-sky-500 text-soundflow-white font-bold text-lg rounded-full transition transform hover:scale-105 ">
+               class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-soundflow-violet hover:bg-sky-500 text-soundflow-white font-bold text-base sm:text-lg rounded-full transition transform hover:scale-105">
                 <i class="fas fa-home"></i>
                 На главную
             </a>
             <a href="contacts.html" 
-               class="inline-flex items-center gap-2 px-8 py-4 bg-transparent border-2 border-white hover:bg-white/10 font-bold text-white text-lg rounded-full">
+               class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-white hover:bg-white/10 font-bold text-white text-base sm:text-lg rounded-full">
                 <i class="fas fa-envelope"></i>
                 Связаться с нами
             </a>
         </div>
         
         <!-- Quick Navigation -->
-        <div class="bg-soundflow-gray rounded-2xl p-8 ">
-            <p class="text-soundflow-lightgray mb-6">Или воспользуйтесь навигацией:</p>
+        <div class="bg-soundflow-gray rounded-2xl p-4 sm:p-6 md:p-8">
+            <p class="text-soundflow-lightgray mb-4 sm:mb-6 text-sm sm:text-base">Или воспользуйтесь навигацией:</p>
             
-            <div class="grid sm:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 
-                <a href="index.html" class="group bg-soundflow-black border border-soundflow-lightgray hover:bg-transparent rounded-xl p-6">
-                    <div class="w-12 h-12 bg-soundflow-violet rounded-full flex items-center justify-center mb-3 mx-auto group-hover:scale-110 transition-transform ">
-                        <i class="fas fa-home text-soundflow-white text-xl"></i>
+                <a href="index.html" class="group bg-soundflow-black border border-soundflow-lightgray hover:bg-transparent rounded-xl p-4 sm:p-6 transition">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-soundflow-violet rounded-full flex items-center justify-center mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-home text-soundflow-white text-lg sm:text-xl"></i>
                     </div>
-                    <h3 class="mb-1">Главная</h3>
-                    <p class="text-sm text-soundflow-lightgray">Вернуться на главную</p>
+                    <h3 class="mb-1 text-sm sm:text-base font-semibold">Главная</h3>
+                    <p class="text-xs sm:text-sm text-soundflow-lightgray">Вернуться на главную</p>
                 </a>
                 
-                <a href="faq.html" class="group bg-soundflow-black border border-soundflow-lightgray hover:bg-transparent rounded-xl p-6">
-                    <div class="w-12 h-12 bg-soundflow-violet rounded-full flex items-center justify-center mb-3 mx-auto group-hover:scale-110 transition-transform">
-                        <i class="fas fa-question text-soundflow-white text-xl"></i>
+                <a href="faq.html" class="group bg-soundflow-black border border-soundflow-lightgray hover:bg-transparent rounded-xl p-4 sm:p-6 transition">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-soundflow-violet rounded-full flex items-center justify-center mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-question text-soundflow-white text-lg sm:text-xl"></i>
                     </div>
-                    <h3 class="font-semibold mb-1">FAQ</h3>
-                    <p class="text-sm text-soundflow-lightgray">Частые вопросы</p>
+                    <h3 class="font-semibold mb-1 text-sm sm:text-base">FAQ</h3>
+                    <p class="text-xs sm:text-sm text-soundflow-lightgray">Частые вопросы</p>
                 </a>
                 
-                <a href="contacts.html" class="group bg-soundflow-black border border-soundflow-lightgray hover:bg-transparent rounded-xl p-6">
-                    <div class="w-12 h-12 bg-soundflow-violet rounded-full flex items-center justify-center mb-3 mx-auto group-hover:scale-110 transition-transform">
-                        <i class="fas fa-headset text-soundflow-white text-xl"></i>
+                <a href="contacts.html" class="group bg-soundflow-black border border-soundflow-lightgray hover:bg-transparent rounded-xl p-4 sm:p-6 transition">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-soundflow-violet rounded-full flex items-center justify-center mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-headset text-soundflow-white text-lg sm:text-xl"></i>
                     </div>
-                    <h3 class="font-semibold mb-1">Контакты</h3>
-                    <p class="text-sm text-soundflow-lightgray">Написать нам</p>
+                    <h3 class="font-semibold mb-1 text-sm sm:text-base">Контакты</h3>
+                    <p class="text-xs sm:text-sm text-soundflow-lightgray">Написать нам</p>
                 </a>
             </div>
         </div>
